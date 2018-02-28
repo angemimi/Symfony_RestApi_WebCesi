@@ -76,6 +76,11 @@ fos_rest:
         formats: { json: true, xml: false, rss: false }
     serializer:
         serialize_null: true
+    format_listener:
+        rules:
+            - { path: '^/', priorities: ['json'], fallback_format: 'json' }
+
+
 
 sensio_framework_extra:
     view: { annotations: false }

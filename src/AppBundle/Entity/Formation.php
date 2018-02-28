@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity
@@ -14,21 +15,29 @@ class Formation
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Serializer\Groups({"get","modules","promos"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * 
+     * @Serializer\Groups({"get","modules","promos"})
      */
     private $title;
 
     /**
      * @ORM\OneToMany(targetEntity="FormationModule", mappedBy="formation", cascade={"persist"})
+     * 
+     * @Serializer\Groups({"modules"})
      */
     private $modules;
 
     /**
      * @ORM\OneToMany(targetEntity="Promotion", mappedBy="formation", cascade={"persist"})
+     * 
+     * @Serializer\Groups({"promos"})
      */
     private $promotions;
 
