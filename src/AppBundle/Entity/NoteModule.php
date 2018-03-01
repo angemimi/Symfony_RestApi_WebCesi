@@ -13,7 +13,7 @@ class NoteModule
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Formation", cascade={"all"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Enseignant", cascade={"all"}, fetch="EAGER")
      */
     private $enseignant;
 
