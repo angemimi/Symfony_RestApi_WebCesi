@@ -32,24 +32,20 @@ class FormationController extends Controller
 
         $em->flush();
 
-        return new Response('Formation inserted',Response::HTTP_OK);
+        return $myarr;
     }
 
     /**
-     * @Rest\Post(
-     *    path = "/formations/{id]}",
+     * @Rest\Get(
+     *    path = "/formations/{id}",
      *    name = "app_formation_get",
      *    requirements = {"id"="\d+"}
      * )
+     * @Rest\View(StatusCode = 200)
      */
     public function getAction(Formation $formation)
     {
-        $data = $this->get('jms_serializer')->serialize($formation, 'json', SerializationContext::create()->setGroups(array('get')));
-
-        $response = new Response($data);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        return $formation;
     }
 }
 

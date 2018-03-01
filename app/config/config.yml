@@ -70,12 +70,13 @@ swiftmailer:
 
 # FosRest Configuration
 fos_rest:
-    body_converter:
-        enabled: true
     view:
-        formats: { json: true, xml: false, rss: false }
+        formats: {json: true, xml: false, rss: false }
+        view_response_listener: true
     serializer:
         serialize_null: true
+    body_converter:
+        enabled: true
     format_listener:
         rules:
             - { path: '^/', priorities: ['json'], fallback_format: 'json' }
@@ -83,5 +84,5 @@ fos_rest:
 
 
 sensio_framework_extra:
-    view: { annotations: false }
+    view: { annotations: true }
     request: { converters: true }
