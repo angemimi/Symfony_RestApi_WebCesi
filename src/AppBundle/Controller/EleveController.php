@@ -6,28 +6,28 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use AppBundle\Entity\Formation;
+use AppBundle\Entity\Eleve;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 
-class FormationController extends Controller
+class EleveController extends Controller
 {
     /**
      * @Rest\Post(
-     *    path = "/formations",
-     *    name = "app_formation_create"
+     *    path = "/eleves",
+     *    name = "app_eleve_create"
      * )
      * @Rest\View(StatusCode = 201)
-     * @ParamConverter("myarr", class="array<AppBundle\Entity\Formation>", converter="fos_rest.request_body")
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\Eleve>", converter="fos_rest.request_body")
      */
     public function createAction(Array $myarr)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach($myarr as $formation)
+        foreach($myarr as $eleve)
         {
-            $em->persist($formation);
+            $em->persist($eleve);
         }
 
         $em->flush();
@@ -37,25 +37,23 @@ class FormationController extends Controller
 
     /**
      * @Rest\Get(
-     *    path = "/formations/{id}",
-     *    name = "app_formation_get",
+     *    path = "/eleves/{id}",
+     *    name = "app_eleve_get",
      *    requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 200)
      */
-    public function getAction(Formation $formation)
+    public function getAction(Eleve $eleve)
     {
-        return $formation;
+        return $eleve;
     }
 
     /**
-     * @Rest\Get("/formations", name="app_formation_list")
-     * 
-     * @Rest\View(StatusCode = 200)
+     * @Rest\Get("/eleves", name="app_eleve_list")
      */
     public function listAction()
     {
-        $formations = $this->getDoctrine()->getRepository('AppBundle:Formation')->findAll();
+        $formations = $this->getDoctrine()->getRepository('AppBundle:Entity:Eleve')->findAll();
         
         return $formations;
     }
