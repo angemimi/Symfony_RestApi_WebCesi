@@ -16,44 +16,37 @@ class Module
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
-     * @Serializer\Groups({"get"})
+     * @Serializer\Groups({"id_module","get_module"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * 
-     * @Serializer\Groups({"get"})
+     * @Serializer\Groups({"get_module"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=100)
      * 
-     * @Serializer\Groups({"get"})
+     * @Serializer\Groups({"get_module"})
      */
-    private $contenu;
+    private $content;
 
     /**
-     * @ORM\OneToMany(targetEntity="FormationModule", mappedBy="module", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="TrainingModule", mappedBy="module", cascade={"persist"})
      * 
-     * @Serializer\Groups({"formations"})
+     * @Serializer\Groups({"training"})
      */
-    private $formation;
+    private $training;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Enseignant", cascade={"all"}, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="ModuleTeacher", mappedBy="modules", cascade={"persist"})
      * 
-     * @Serializer\Groups({"enseignant"})
+     * @Serializer\Groups({"modules"})
      */
-    private $enseignant;
-
-    /**
-     * @ORM\OneToMany(targetEntity="NoteModule", mappedBy="module", cascade={"persist"})
-     * 
-     * @Serializer\Groups({"notes"})
-     */
-    private $notes;
+    private $teachers;
 
 
     public function getId()
@@ -73,50 +66,38 @@ class Module
         return $this;
     }
 
-    public function getContenu()
+    public function getContent()
     {
-        return $this->contenu;
+        return $this->content;
     }
 
-    public function setContenu($contenu)
+    public function setContent($content)
     {
-        $this->contenu = $contenu;
+        $this->content = $content;
 
         return $this;
     }
 
-    public function getFormation()
+    public function getTraining()
     {
-        return $this->formation;
+        return $this->training;
     }
 
-    public function setFormation($formation)
+    public function setTraining($training)
     {
-        $this->formation = $formation;
+        $this->training = $training;
 
         return $this;
     }
 
-    public function getEnseignant()
+    public function getTeacher()
     {
-        return $this->enseignant;
+        return $this->teachers;
     }
 
-    public function setEnseignant($enseignant)
+    public function setTeacher($teachers)
     {
-        $this->enseignant = $enseignant;
-
-        return $this;
-    }
-
-    public function getNotes()
-    {
-        return $this->notes;
-    }
-
-    public function setNotes($notes)
-    {
-        $this->notes = $notes;
+        $this->teachers = $teachers;
 
         return $this;
     }

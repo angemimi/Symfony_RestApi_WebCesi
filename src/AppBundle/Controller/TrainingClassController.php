@@ -6,28 +6,28 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use AppBundle\Entity\Eleve;
+use AppBundle\Entity\TrainingClass;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 
-class EleveController extends Controller
+class TrainingClassController extends Controller
 {
     /**
      * @Rest\Post(
-     *    path = "/eleves",
-     *    name = "app_eleve_create"
+     *    path = "/trainingclass",
+     *    name = "app_trainingclass_create"
      * )
      * @Rest\View(StatusCode = 201)
-     * @ParamConverter("myarr", class="array<AppBundle\Entity\Eleve>", converter="fos_rest.request_body")
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\TrainingClass>", converter="fos_rest.request_body")
      */
     public function createAction(Array $myarr)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach($myarr as $eleve)
+        foreach($myarr as $promotion)
         {
-            $em->persist($eleve);
+            $em->persist($promotion);
         }
 
         $em->flush();
@@ -37,15 +37,15 @@ class EleveController extends Controller
 
     /**
      * @Rest\Get(
-     *    path = "/eleves/{id}",
-     *    name = "app_eleve_get",
+     *    path = "/trainingclass/{id}",
+     *    name = "app_trainingclass_get",
      *    requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 200)
      */
-    public function getAction(Eleve $eleve)
+    public function getAction(TrainingClass $trainingclass)
     {
-        $data = $this->get('jms_serializer')->serialize($eleve, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($trainingclass, 'json', SerializationContext::create()->setGroups(array('get','Training','Students','id_student')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -54,15 +54,15 @@ class EleveController extends Controller
     }
 
     /**
-     * @Rest\Get("/eleves", name="app_eleve_list")
+     * @Rest\Get("/trainingclass", name="app_trainingclass_list")
      * 
      * @Rest\View(StatusCode = 200)
      */
     public function listAction()
     {
-        $eleves = $this->getDoctrine()->getRepository('AppBundle:Eleve')->findAll();
+        $trainingclass = $this->getDoctrine()->getRepository('AppBundle:TrainingClass')->findAll();
         
-        $data = $this->get('jms_serializer')->serialize($eleves, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($trainingclass, 'json', SerializationContext::create()->setGroups(array('get','Training','Students','id_student')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -71,7 +71,7 @@ class EleveController extends Controller
     }
 
     /**
-     * @Rest\Options("/eleves", name="app_eleve_options")
+     * @Rest\Options("/promotions", name="app_promotion_options")
      * 
      * @rest\View(StatusCode = 200)
      */

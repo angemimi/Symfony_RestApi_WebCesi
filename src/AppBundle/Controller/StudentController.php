@@ -6,28 +6,30 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use AppBundle\Entity\Formation;
+use AppBundle\Entity\Student;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 
-class FormationController extends Controller
+class StudentController extends Controller
 {
+    
     /**
      * @Rest\Post(
-     *    path = "/formations",
-     *    name = "app_formation_create"
+     *    path = "/students",
+     *    name = "app_students_create"
      * )
      * @Rest\View(StatusCode = 201)
-     * @ParamConverter("myarr", class="array<AppBundle\Entity\Formation>", converter="fos_rest.request_body")
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\Student>", converter="fos_rest.request_body")
      */
     public function createAction(Array $myarr)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach($myarr as $formation)
+        foreach($myarr as $student)
         {
-            $em->persist($formation);
+            $student->setRole('Student');
+            $em->persist($student);
         }
 
         $em->flush();
@@ -37,15 +39,15 @@ class FormationController extends Controller
 
     /**
      * @Rest\Get(
-     *    path = "/formations/{id}",
-     *    name = "app_formation_get",
+     *    path = "/students/{id}",
+     *    name = "app_students_get",
      *    requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 200)
      */
-    public function getAction(Formation $formation)
+    public function getAction(Student $students)
     {
-        $data = $this->get('jms_serializer')->serialize($formation, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($students, 'json', SerializationContext::create()->setGroups(array('get_student')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -54,15 +56,15 @@ class FormationController extends Controller
     }
 
     /**
-     * @Rest\Get("/formations", name="app_formation_list")
+     * @Rest\Get("/students", name="app_students_list")
      * 
      * @Rest\View(StatusCode = 200)
      */
     public function listAction()
     {
-        $formations = $this->getDoctrine()->getRepository('AppBundle:Formation')->findAll();
+        $students = $this->getDoctrine()->getRepository('AppBundle:Student')->findAll();
         
-        $data = $this->get('jms_serializer')->serialize($formations, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($students, 'json', SerializationContext::create()->setGroups(array('get_student')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -71,7 +73,7 @@ class FormationController extends Controller
     }
 
     /**
-     * @Rest\Options("/formations", name="app_formation_options")
+     * @Rest\Options("/eleves", name="app_eleve_options")
      * 
      * @rest\View(StatusCode = 200)
      */

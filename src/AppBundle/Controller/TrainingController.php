@@ -6,28 +6,28 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use AppBundle\Entity\Enseignant;
+use AppBundle\Entity\Training;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 
-class EnseignantController extends Controller
+class TrainingController extends Controller
 {
     /**
      * @Rest\Post(
-     *    path = "/enseignants",
-     *    name = "app_enseignant_create"
+     *    path = "/trainings",
+     *    name = "app_training_create"
      * )
      * @Rest\View(StatusCode = 201)
-     * @ParamConverter("myarr", class="array<AppBundle\Entity\Enseignant>", converter="fos_rest.request_body")
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\Training>", converter="fos_rest.request_body")
      */
     public function createAction(Array $myarr)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach($myarr as $enseignant)
+        foreach($myarr as $formation)
         {
-            $em->persist($enseignant);
+            $em->persist($formation);
         }
 
         $em->flush();
@@ -37,15 +37,15 @@ class EnseignantController extends Controller
 
     /**
      * @Rest\Get(
-     *    path = "/enseignants/{id}",
-     *    name = "app_enseignant_get",
+     *    path = "/trainings/{id}",
+     *    name = "app_training_get",
      *    requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 200)
      */
-    public function getAction(Enseignant $enseignant)
+    public function getAction(Training $training)
     {
-        $data = $this->get('jms_serializer')->serialize($enseignant, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($training, 'json', SerializationContext::create()->setGroups(array('get_training','modules','id_module')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -54,15 +54,15 @@ class EnseignantController extends Controller
     }
 
     /**
-     * @Rest\Get("/enseignants", name="app_enseignant_list")
+     * @Rest\Get("/trainings", name="app_training_list")
      * 
      * @Rest\View(StatusCode = 200)
      */
     public function listAction()
     {
-        $enseignants = $this->getDoctrine()->getRepository('AppBundle:Enseignant')->findAll();
+        $trainings = $this->getDoctrine()->getRepository('AppBundle:Training')->findAll();
         
-        $data = $this->get('jms_serializer')->serialize($enseignants, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($trainings, 'json', SerializationContext::create()->setGroups(array('get_training','modules','id_module')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -71,7 +71,7 @@ class EnseignantController extends Controller
     }
 
     /**
-     * @Rest\Options("/enseignants", name="app_enseignant_options")
+     * @Rest\Options("/formations", name="app_formation_options")
      * 
      * @rest\View(StatusCode = 200)
      */

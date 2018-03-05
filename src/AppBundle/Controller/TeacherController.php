@@ -6,28 +6,29 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use AppBundle\Entity\Promotion;
+use AppBundle\Entity\Teacher;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 
-class PromotionController extends Controller
+class TeacherController extends Controller
 {
     /**
      * @Rest\Post(
-     *    path = "/promotions",
-     *    name = "app_promotion_create"
+     *    path = "/teachers",
+     *    name = "app_teacher_create"
      * )
      * @Rest\View(StatusCode = 201)
-     * @ParamConverter("myarr", class="array<AppBundle\Entity\Promotion>", converter="fos_rest.request_body")
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\Teacher>", converter="fos_rest.request_body")
      */
     public function createAction(Array $myarr)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach($myarr as $promotion)
+        foreach($myarr as $teacher)
         {
-            $em->persist($promotion);
+            $teacher->setRole('Teachers');
+            $em->persist($teacher);
         }
 
         $em->flush();
@@ -37,15 +38,15 @@ class PromotionController extends Controller
 
     /**
      * @Rest\Get(
-     *    path = "/promotions/{id}",
-     *    name = "app_promotion_get",
+     *    path = "/teachers/{id}",
+     *    name = "app_teacher_get",
      *    requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 200)
      */
-    public function getAction(Promotion $promotion)
+    public function getAction(Teacher $teacher)
     {
-        $data = $this->get('jms_serializer')->serialize($promotion, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($teacher, 'json', SerializationContext::create()->setGroups(array('get')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -54,15 +55,15 @@ class PromotionController extends Controller
     }
 
     /**
-     * @Rest\Get("/promotions", name="app_promotion_list")
+     * @Rest\Get("/teachers", name="app_teacher_list")
      * 
      * @Rest\View(StatusCode = 200)
      */
     public function listAction()
     {
-        $promotions = $this->getDoctrine()->getRepository('AppBundle:Promotion')->findAll();
+        $teachers = $this->getDoctrine()->getRepository('AppBundle:Teacher')->findAll();
         
-        $data = $this->get('jms_serializer')->serialize($promotions, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($teachers, 'json', SerializationContext::create()->setGroups(array('get')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -71,7 +72,7 @@ class PromotionController extends Controller
     }
 
     /**
-     * @Rest\Options("/promotions", name="app_promotion_options")
+     * @Rest\Options("/enseignants", name="app_enseignant_options")
      * 
      * @rest\View(StatusCode = 200)
      */

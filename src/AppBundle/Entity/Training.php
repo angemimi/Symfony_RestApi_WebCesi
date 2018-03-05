@@ -9,37 +9,44 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Entity
  * @ORM\Table()
  */
-class Formation
+class Training
 {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
-     * @Serializer\Groups({"get","modules","promos"})
+     * @Serializer\Groups({"id_training","get_training"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * 
-     * @Serializer\Groups({"get","modules","promos"})
+     * @Serializer\Groups({"get_training"})
      */
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="FormationModule", mappedBy="formation", cascade={"persist"})
+     * @ORM\Column(type="string", length=100)
+     * 
+     * @Serializer\Groups({"get_training"})
+     */
+    private $code;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TrainingModule", mappedBy="training", cascade={"persist"})
      * 
      * @Serializer\Groups({"modules"})
      */
     private $modules;
 
     /**
-     * @ORM\OneToMany(targetEntity="Promotion", mappedBy="formation", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="TrainingClass", mappedBy="training", cascade={"persist"})
      * 
-     * @Serializer\Groups({"promos"})
+     * @Serializer\Groups({"TrainingClass"})
      */
-    private $promotions;
+    private $trainingClass;
 
     public function getId()
     {
@@ -58,6 +65,18 @@ class Formation
         return $this;
     }
 
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
     public function getmodules()
     {
         return $this->modules;
@@ -70,14 +89,14 @@ class Formation
         return $this;
     }
 
-    public function getPromotion()
+    public function getTrainingClass()
     {
-        return $this->promotions;
+        return $this->trainingClass;
     }
 
-    public function setPromotion($promotions)
+    public function setTrainingClass($trainingClass)
     {
-        $this->promotions = $promotions;
+        $this->trainingClass = $trainingClass;
 
         return $this;
     }

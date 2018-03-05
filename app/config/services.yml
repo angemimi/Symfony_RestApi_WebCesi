@@ -4,6 +4,17 @@ parameters:
     #parameter_name: value
 
 services:
+    custom_serializer_handle:
+        class: AppBundle\Serializer\Handler\EntityHandler
+        arguments: ['@doctrine']
+        tags:
+            - {name: 'jms_serializer.subscribing_handler'}
+    App\Normalizer\EntityNormalizer:
+        public: false
+        autowire: true
+        autoconfigure: true
+        tags:
+        - { name: serializer.normalizer }
     # default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services
