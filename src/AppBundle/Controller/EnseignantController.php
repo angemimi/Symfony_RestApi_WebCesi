@@ -45,7 +45,12 @@ class EnseignantController extends Controller
      */
     public function getAction(Enseignant $enseignant)
     {
-        return $enseignant;
+        $data = $this->get('jms_serializer')->serialize($enseignant, 'json', SerializationContext::create()->setGroups(array('get')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**
@@ -57,7 +62,12 @@ class EnseignantController extends Controller
     {
         $enseignants = $this->getDoctrine()->getRepository('AppBundle:Enseignant')->findAll();
         
-        return $enseignants;
+        $data = $this->get('jms_serializer')->serialize($enseignants, 'json', SerializationContext::create()->setGroups(array('get')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }
 

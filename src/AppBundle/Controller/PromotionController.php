@@ -6,28 +6,28 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
-use AppBundle\Entity\Eleve;
+use AppBundle\Entity\Promotion;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use JMS\Serializer\SerializationContext;
 
-class EleveController extends Controller
+class PromotionController extends Controller
 {
     /**
      * @Rest\Post(
-     *    path = "/eleves",
-     *    name = "app_eleve_create"
+     *    path = "/promotions",
+     *    name = "app_promotion_create"
      * )
      * @Rest\View(StatusCode = 201)
-     * @ParamConverter("myarr", class="array<AppBundle\Entity\Eleve>", converter="fos_rest.request_body")
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\Promotion>", converter="fos_rest.request_body")
      */
     public function createAction(Array $myarr)
     {
         $em = $this->getDoctrine()->getManager();
 
-        foreach($myarr as $eleve)
+        foreach($myarr as $promotion)
         {
-            $em->persist($eleve);
+            $em->persist($promotion);
         }
 
         $em->flush();
@@ -37,15 +37,15 @@ class EleveController extends Controller
 
     /**
      * @Rest\Get(
-     *    path = "/eleves/{id}",
-     *    name = "app_eleve_get",
+     *    path = "/promotions/{id}",
+     *    name = "app_promotion_get",
      *    requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 200)
      */
-    public function getAction(Eleve $eleve)
+    public function getAction(Promotion $promotion)
     {
-        $data = $this->get('jms_serializer')->serialize($eleve, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($promotion, 'json', SerializationContext::create()->setGroups(array('get')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -54,15 +54,15 @@ class EleveController extends Controller
     }
 
     /**
-     * @Rest\Get("/eleves", name="app_eleve_list")
+     * @Rest\Get("/promotions", name="app_promotion_list")
      * 
      * @Rest\View(StatusCode = 200)
      */
     public function listAction()
     {
-        $eleves = $this->getDoctrine()->getRepository('AppBundle:Eleve')->findAll();
+        $promotions = $this->getDoctrine()->getRepository('AppBundle:Promotion')->findAll();
         
-        $data = $this->get('jms_serializer')->serialize($eleves, 'json', SerializationContext::create()->setGroups(array('get')));
+        $data = $this->get('jms_serializer')->serialize($promotions, 'json', SerializationContext::create()->setGroups(array('get')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');

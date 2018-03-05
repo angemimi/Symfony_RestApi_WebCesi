@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity
@@ -14,26 +15,36 @@ class Promotion
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Serializer\Groups({"get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * 
+     * @Serializer\Groups({"get"})
      */
     private $title;
 
     /** 
-     * @ORM\Column(type="datetime") 
+     * @ORM\Column(type="integer") 
+     * 
+     * @Serializer\Groups({"get"})
      */
     private $annee;
 
     /**
      * @ORM\ManyToOne(targetEntity="Formation", cascade={"all"}, fetch="EAGER")
+     * 
+     * @Serializer\Groups({"formations"})
      */
     private $formation;
 
     /**
      * @ORM\OneToMany(targetEntity="Eleve", mappedBy="promotion", cascade={"persist"})
+     * 
+     * @Serializer\Groups({"eleves"})
      */
     private $eleves;
 

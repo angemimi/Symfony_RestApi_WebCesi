@@ -45,7 +45,12 @@ class ModuleController extends Controller
      */
     public function getAction(Module $module)
     {
-        return $module;
+        $data = $this->get('jms_serializer')->serialize($module, 'json', SerializationContext::create()->setGroups(array('get')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**
@@ -57,7 +62,12 @@ class ModuleController extends Controller
     {
         $modules = $this->getDoctrine()->getRepository('AppBundle:Module')->findAll();
         
-        return $modules;
+        $data = $this->get('jms_serializer')->serialize($modules, 'json', SerializationContext::create()->setGroups(array('get')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }
 

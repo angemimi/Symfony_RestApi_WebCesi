@@ -45,7 +45,12 @@ class FormationController extends Controller
      */
     public function getAction(Formation $formation)
     {
-        return $formation;
+        $data = $this->get('jms_serializer')->serialize($formation, 'json', SerializationContext::create()->setGroups(array('get')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 
     /**
@@ -57,7 +62,12 @@ class FormationController extends Controller
     {
         $formations = $this->getDoctrine()->getRepository('AppBundle:Formation')->findAll();
         
-        return $formations;
+        $data = $this->get('jms_serializer')->serialize($formations, 'json', SerializationContext::create()->setGroups(array('get')));
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }
 

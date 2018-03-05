@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 /**
  * @ORM\Entity
@@ -14,31 +15,43 @@ class Module
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @Serializer\Groups({"get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * 
+     * @Serializer\Groups({"get"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * 
+     * @Serializer\Groups({"get"})
      */
     private $contenu;
 
     /**
      * @ORM\OneToMany(targetEntity="FormationModule", mappedBy="module", cascade={"persist"})
+     * 
+     * @Serializer\Groups({"formations"})
      */
     private $formation;
 
     /**
      * @ORM\ManyToOne(targetEntity="Enseignant", cascade={"all"}, fetch="EAGER")
+     * 
+     * @Serializer\Groups({"enseignant"})
      */
     private $enseignant;
 
     /**
      * @ORM\OneToMany(targetEntity="NoteModule", mappedBy="module", cascade={"persist"})
+     * 
+     * @Serializer\Groups({"notes"})
      */
     private $notes;
 
