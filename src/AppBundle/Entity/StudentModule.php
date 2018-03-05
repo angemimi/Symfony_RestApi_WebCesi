@@ -11,12 +11,13 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class StudentModule
 {
-
     /**
      * @ORM\Id
      * 
      * @ORM\ManyToOne(targetEntity="Student")
      * @ORM\JoinColumn(name="idStudent", referencedColumnName="id")
+     * @Serializer\Type("Entity<AppBundle\Entity\Student>")
+     * @Serializer\SerializedName("idStudent")
      */
     private $students;
 
@@ -25,6 +26,8 @@ class StudentModule
      * 
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
+     * @Serializer\Type("Entity<AppBundle\Entity\Module>")
+     * @Serializer\SerializedName("idModule")
      */
     private $module;
 
@@ -36,12 +39,14 @@ class StudentModule
     /**
      * @ORM\Column(type="string")
      */
-    private $commentaire;
+    private $comment;
 
     /** 
      * @ORM\Column(type="date") 
      * 
      * @Serializer\Groups({"get"})
+     * @Serializer\SerializedName("moduleDate")
+     * @Serializer\Type("DateTime<'d-m-Y'>")
      */
     private $moduleDate;
 
@@ -49,6 +54,7 @@ class StudentModule
      * @ORM\Column(type="boolean") 
      * 
      * @Serializer\Groups({"get"})
+     * @Serializer\SerializedName("isRemedial")
      */
     private $isRemedial;
 
@@ -88,14 +94,14 @@ class StudentModule
         return $this;
     }
 
-    public function getCommentaire()
+    public function getComment()
     {
-        return $this->commentaire;
+        return $this->comment;
     }
 
-    public function setCommentaire($commentaire)
+    public function setComment($comment)
     {
-        $this->commentaire = $commentaire;
+        $this->comment = $comment;
 
         return $this;
     }

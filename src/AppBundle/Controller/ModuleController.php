@@ -71,6 +71,50 @@ class ModuleController extends Controller
     }
 
     /**
+     * @Rest\Post(
+     *    path = "/addmark",
+     *    name = "app_training_addmark"
+     * )
+     * @Rest\View(StatusCode = 201)
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\StudentModule>", converter="fos_rest.request_body")
+     */
+    public function addModuleAction(Array $myarr)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        foreach($myarr as $studentModule)
+        {
+            $em->persist($studentModule);
+        }
+
+        $em->flush();
+
+        return $myarr;
+    }
+
+    /**
+     * @Rest\Post(
+     *    path = "/addteacher",
+     *    name = "app_training_addteacher"
+     * )
+     * @Rest\View(StatusCode = 201)
+     * @ParamConverter("myarr", class="array<AppBundle\Entity\ModuleTeacher>", converter="fos_rest.request_body")
+     */
+    public function addTeacherAction(Array $myarr)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        foreach($myarr as $moduleTeacher)
+        {
+            $em->persist($moduleTeacher);
+        }
+
+        $em->flush();
+
+        return $myarr;
+    }
+
+    /**
      * @Rest\Options("/modules", name="app_module_options")
      * 
      * @rest\View(StatusCode = 200)

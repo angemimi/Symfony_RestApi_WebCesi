@@ -15,8 +15,10 @@ class TrainingModule
     /**
      * @ORM\Id
      * 
-     * @ORM\ManyToOne(targetEntity="Training")
+     * @ORM\ManyToOne(targetEntity="Training", cascade={"all"}, fetch="EAGER")
      * @ORM\JoinColumn(name="idTraining", referencedColumnName="id")
+     * @Serializer\Type("Entity<AppBundle\Entity\Training>")
+     * @Serializer\SerializedName("idTraining")
      */
     private $training;
 
@@ -25,6 +27,8 @@ class TrainingModule
      * 
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
+     * @Serializer\Type("Entity<AppBundle\Entity\Module>")
+     * @Serializer\SerializedName("idModule")
      */
     private $module;
 
@@ -32,6 +36,8 @@ class TrainingModule
      * @ORM\Column(type="date") 
      * 
      * @Serializer\Groups({"get"})
+     * @Serializer\SerializedName("startDate")
+     * @Serializer\Type("DateTime<'d-m-Y'>")
      */
     private $startDate;
 
@@ -39,6 +45,8 @@ class TrainingModule
      * @ORM\Column(type="date") 
      * 
      * @Serializer\Groups({"get"})
+     * @Serializer\SerializedName("endDate")
+     * @Serializer\Type("DateTime<'d-m-Y'>")
      */
     private $endDate;
 

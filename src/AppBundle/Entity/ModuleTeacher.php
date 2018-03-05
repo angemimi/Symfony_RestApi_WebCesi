@@ -16,6 +16,8 @@ class ModuleTeacher
      * 
      * @ORM\ManyToOne(targetEntity="Module")
      * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
+     * @Serializer\Type("Entity<AppBundle\Entity\Module>")
+     * @Serializer\SerializedName("idModule")
      */
     private $modules;
 
@@ -24,6 +26,8 @@ class ModuleTeacher
      * 
      * @ORM\ManyToOne(targetEntity="Teacher")
      * @ORM\JoinColumn(name="idTeacher", referencedColumnName="id")
+     * @Serializer\Type("Entity<AppBundle\Entity\Teacher>")
+     * @Serializer\SerializedName("idTeacher")
      */
     private $teachers;
 
@@ -31,6 +35,8 @@ class ModuleTeacher
      * @ORM\Column(type="date") 
      * 
      * @Serializer\Groups({"get"})
+     * @Serializer\SerializedName("startDate")
+     * @Serializer\Type("DateTime<'d-m-Y'>")
      */
     private $startDate;
 
@@ -38,6 +44,8 @@ class ModuleTeacher
      * @ORM\Column(type="date") 
      * 
      * @Serializer\Groups({"get"})
+     * @Serializer\SerializedName("endDate")
+     * @Serializer\Type("DateTime<'d-m-Y'>")
      */
     private $endDate;
 

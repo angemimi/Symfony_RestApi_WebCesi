@@ -72,6 +72,35 @@ class TeacherController extends Controller
     }
 
     /**
+     * @Rest\Get("/teachersmodules/{id}", 
+     *    name="app_teacher_module",
+     *    requirements = {"id"="\d+"})
+     * 
+     * @Rest\View(StatusCode = 200)
+     */
+    public function getMarksAction(Teacher $teacher)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $id = $teacher->getId();
+        
+        $query = $em->createQuery(
+            'SELECT t.id AS idTeacher, m.id AS idModule, m.title, m.content
+             FROM AppBundle\Entity\Teacher t
+             JOIN t.modules mt
+             JOIN mt.modules m
+             WHERE t.id=?1');
+        $query->setParameter(1, $id);
+        $result = $query->getResult();
+        
+        $data = $this->get('jms_serializer')->serialize($result, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
      * @Rest\Options("/enseignants", name="app_enseignant_options")
      * 
      * @rest\View(StatusCode = 200)
