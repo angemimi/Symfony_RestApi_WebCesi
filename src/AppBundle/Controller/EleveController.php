@@ -69,6 +69,15 @@ class EleveController extends Controller
 
         return $response;
     }
+
+    /**
+     * @Rest\Options("/eleves", name="app_eleve_options")
+     * 
+     * @rest\View(StatusCode = 200)
+     */
+    public function optionAction(){
+        return true;
+    }
 }
 
 ?>

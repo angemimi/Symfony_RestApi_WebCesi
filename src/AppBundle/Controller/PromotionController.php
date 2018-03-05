@@ -69,6 +69,15 @@ class PromotionController extends Controller
 
         return $response;
     }
+
+    /**
+     * @Rest\Options("/promotions", name="app_promotion_options")
+     * 
+     * @rest\View(StatusCode = 200)
+     */
+    public function optionAction(){
+        return true;
+    }
 }
 
 ?>

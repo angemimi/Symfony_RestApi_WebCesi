@@ -69,6 +69,15 @@ class EnseignantController extends Controller
 
         return $response;
     }
+
+    /**
+     * @Rest\Options("/enseignants", name="app_enseignant_options")
+     * 
+     * @rest\View(StatusCode = 200)
+     */
+    public function optionAction(){
+        return true;
+    }
 }
 
 ?>

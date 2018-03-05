@@ -14,18 +14,21 @@ class NoteModule
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Enseignant", cascade={"all"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="enseignant_id", referencedColumnName="id")
      */
     private $enseignant;
 
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Eleve", cascade={"all"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="eleve_id", referencedColumnName="id")
      */
     private $eleve;
 
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Module", cascade={"all"}, fetch="EAGER")
+     * @ORM\JoinColumn(name="module_id", referencedColumnName="id")
      */
     private $module;
 

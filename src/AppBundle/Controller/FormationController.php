@@ -69,6 +69,15 @@ class FormationController extends Controller
 
         return $response;
     }
+
+    /**
+     * @Rest\Options("/formations", name="app_formation_options")
+     * 
+     * @rest\View(StatusCode = 200)
+     */
+    public function optionAction(){
+        return true;
+    }
 }
 
 ?>

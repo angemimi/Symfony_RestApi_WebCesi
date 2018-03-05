@@ -69,6 +69,15 @@ class ModuleController extends Controller
 
         return $response;
     }
+
+    /**
+     * @Rest\Options("/modules", name="app_module_options")
+     * 
+     * @rest\View(StatusCode = 200)
+     */
+    public function optionAction(){
+        return true;
+    }
 }
 
 ?>
