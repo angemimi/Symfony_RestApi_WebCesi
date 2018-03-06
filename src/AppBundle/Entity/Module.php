@@ -44,7 +44,7 @@ class Module
     /**
      * @ORM\OneToMany(targetEntity="ModuleTeacher", mappedBy="modules", cascade={"persist"})
      * 
-     * @Serializer\Groups({"modules"})
+     * @Serializer\Groups({"teachers"})
      */
     private $teachers;
 

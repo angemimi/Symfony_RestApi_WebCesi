@@ -29,6 +29,8 @@ class TrainingModule
      * @ORM\JoinColumn(name="idModule", referencedColumnName="id")
      * @Serializer\Type("Entity<AppBundle\Entity\Module>")
      * @Serializer\SerializedName("idModule")
+     * 
+     * @Serializer\Groups({"get_training"})
      */
     private $module;
 

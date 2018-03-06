@@ -28,6 +28,8 @@ class ModuleTeacher
      * @ORM\JoinColumn(name="idTeacher", referencedColumnName="id")
      * @Serializer\Type("Entity<AppBundle\Entity\Teacher>")
      * @Serializer\SerializedName("idTeacher")
+     * 
+     * @Serializer\Groups({"get_teachers"})
      */
     private $teachers;
 

@@ -45,7 +45,7 @@ class ModuleController extends Controller
      */
     public function getAction(Module $module)
     {
-        $data = $this->get('jms_serializer')->serialize($module, 'json', SerializationContext::create()->setGroups(array('get_module')));
+        $data = $this->get('jms_serializer')->serialize($module, 'json', SerializationContext::create()->setGroups(array('get_module','teachers','get_teachers')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -62,7 +62,7 @@ class ModuleController extends Controller
     {
         $modules = $this->getDoctrine()->getRepository('AppBundle:Module')->findAll();
         
-        $data = $this->get('jms_serializer')->serialize($modules, 'json', SerializationContext::create()->setGroups(array('get_module')));
+        $data = $this->get('jms_serializer')->serialize($modules, 'json', SerializationContext::create()->setGroups(array('get_module','teachers','get_teachers')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
