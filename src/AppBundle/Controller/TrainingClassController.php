@@ -70,7 +70,7 @@ class TrainingClassController extends Controller
         
         $class = $em->getRepository('AppBundle:TrainingClass')->find($id);
 
-        $em->remove($student);
+        $em->remove($class);
         $em->flush();
     }
 
