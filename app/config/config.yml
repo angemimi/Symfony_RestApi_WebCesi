@@ -89,8 +89,11 @@ sensio_framework_extra:
 
 nelmio_cors:
     defaults:
-        allow_credentials: false
         allow_origin: ['*']
-        allow_headers: []
-        allow_methods: []
-        expose_headers: []
+        allow_headers: ['*']
+        allow_methods: ['POST', 'PUT', 'GET', 'DELETE','OPTIONS']
+    paths:
+        '^/api/':
+            allow_origin: ['*']
+            allow_headers: ['*']
+            allow_methods: ['POST', 'PUT', 'GET', 'DELETE','OPTIONS']
