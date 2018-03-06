@@ -86,3 +86,11 @@ fos_rest:
 sensio_framework_extra:
     view: { annotations: true }
     request: { converters: true }
+
+nelmio_cors:
+    defaults:
+        allow_credentials: false
+        allow_origin: ['*']
+        allow_headers: []
+        allow_methods: []
+        expose_headers: []

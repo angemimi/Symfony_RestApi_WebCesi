@@ -47,7 +47,7 @@ class StudentController extends Controller
      */
     public function getAction(Student $students)
     {
-        $data = $this->get('jms_serializer')->serialize($students, 'json', SerializationContext::create()->setGroups(array('get_student')));
+        $data = $this->get('jms_serializer')->serialize($students, 'json', SerializationContext::create()->setGroups(array('get_student','TrainingClass')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
@@ -64,7 +64,7 @@ class StudentController extends Controller
     {
         $students = $this->getDoctrine()->getRepository('AppBundle:Student')->findAll();
         
-        $data = $this->get('jms_serializer')->serialize($students, 'json', SerializationContext::create()->setGroups(array('get_student')));
+        $data = $this->get('jms_serializer')->serialize($students, 'json', SerializationContext::create()->setGroups(array('get_student','TrainingClass')));
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');

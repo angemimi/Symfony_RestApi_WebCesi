@@ -16,21 +16,21 @@ class TrainingClass
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * 
-     * @Serializer\Groups({"id_TrainingClass","get"})
+     * @Serializer\Groups({"id_TrainingClass","get_trainingclass"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=100)
      * 
-     * @Serializer\Groups({"get"})
+     * @Serializer\Groups({"get_trainingclass"})
      */
     private $code;
 
     /** 
      * @ORM\Column(type="integer") 
      * 
-     * @Serializer\Groups({"get"})
+     * @Serializer\Groups({"get_trainingclass"})
      */
     private $year;
 
