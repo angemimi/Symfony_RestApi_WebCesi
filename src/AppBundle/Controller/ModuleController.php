@@ -78,12 +78,13 @@ class ModuleController extends Controller
      * @Rest\View(StatusCode = 201)
      * @ParamConverter("myarr", class="array<AppBundle\Entity\StudentModule>", converter="fos_rest.request_body")
      */
-    public function addModuleAction(Array $myarr)
+    public function addMarkAction(Array $myarr)
     {
         $em = $this->getDoctrine()->getManager();
 
         foreach($myarr as $studentModule)
         {
+            $studentModule->setIsValid(0);
             $em->persist($studentModule);
         }
 

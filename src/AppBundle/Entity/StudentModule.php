@@ -58,6 +58,14 @@ class StudentModule
      */
     private $isRemedial;
 
+    /** 
+     * @ORM\Column(type="boolean",nullable="true") 
+     * 
+     * @Serializer\Groups({"get"})
+     * @Serializer\SerializedName("isRemedial")
+     */
+    private $isValid;
+
     public function getModule()
     {
         return $this->module;
@@ -126,6 +134,18 @@ class StudentModule
     public function setIsRemedial($isRemedial)
     {
         $this->isRemedial = $isRemedial;
+
+        return $this;
+    }
+
+    public function getIsValid()
+    {
+        return $this->isValid;
+    }
+
+    public function setIsValid($isValid)
+    {
+        $this->isValid = $isValid;
 
         return $this;
     }
