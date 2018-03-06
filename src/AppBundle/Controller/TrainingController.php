@@ -123,7 +123,7 @@ class TrainingController extends Controller
     }
 
     /**
-     * @Rest\Options("/formations", name="app_formation_options")
+     * @Rest\Options("/trainings", name="app_formation_options")
      * 
      * @rest\View(StatusCode = 200)
      */
