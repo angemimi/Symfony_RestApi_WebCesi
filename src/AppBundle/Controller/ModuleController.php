@@ -145,7 +145,10 @@ class ModuleController extends Controller
         $remoteStutentModuleArray = json_decode($request->getContent(), true);
 
         foreach($remoteStutentModuleArray as $remoteStutentModule){
-            $studentModule = $em->getRepository('AppBundle:StudentModule')->find($remoteStutentModule['id']);
+            $studentModule = $em->getRepository('AppBundle:StudentModule')->find(
+                $em->getRepository('AppBundle:Module')->find($remoteStutentModule['module']['id']),
+                $em->getRepository('AppBundle:Student')->find($remoteStutentModule['student']['id'])
+            );
             $studentModule->setIsValid(1);
             $em->persist($studentModule);
         }
@@ -174,6 +177,25 @@ class ModuleController extends Controller
         $em->flush();
 
         return $myarr;
+    }
+
+    /**
+     * @Rest\Delete(
+     *    path = "/deleteteacher",
+     *    name = "app_training_deleteteacher"
+     * )
+     * @Rest\View(StatusCode = 200)
+     */
+    public function updateTeacherAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $modulesTeacherRemote = json_decode($request->getContent(), true);
+
+        $moduleTeacher = $em->getRepository('AppBundle:ModuleTeacher')->find(
+            $em->getRepository('AppBundle:Module')->find($modulesTeacherRemote[0]['module']['id']),
+            $em->getRepository('AppBundle:Student')->find($modulesTeacherRemote[0]['student']['id'])    
+        );
+        $em->remove($moduleTeacher);
+        $em->fetch();
     }
 
     /**

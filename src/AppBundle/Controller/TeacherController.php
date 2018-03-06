@@ -43,19 +43,21 @@ class TeacherController extends Controller
      *    requirements = {"id"="\d+"}
      * )
      * @Rest\View(StatusCode = 200)
-     * @ParamConverter("teach", class="AppBundle\Entity\Teacher", converter="fos_rest.request_body")
      */
-    public function updateAction($id, Teacher $teach) {
+    public function updateAction($id, Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $teacher = $em->getRepository('AppBundle:Teacher')->find($id);
-        $teacher->setName($teach->nom);
-        $teacher->setFirstname($teach->firstname);
-        $teacher->setLogin($teach->login);
-        $teacher->setPassword($teach->password);
-        $teacher->setRole($teach->role);
-        $teacher->setModule($teach->module);
 
+        $teacherRemote = json_decode($request->getContent(), true);
+
+        $teacher->setName($teacherRemote[0]['name']);
+        $teacher->setFirstname($teacherRemote[0]['firstname']);
+        $teacher->setLogin($teacherRemote[0]['login']);
+        $teacher->setPassword($teacherRemote[0]['password']);
+        $teacher->setRole($teacherRemote[0]['role']);
+
+        $em->persist($teacher);
         $em->flush();
 
         return $teacher;
