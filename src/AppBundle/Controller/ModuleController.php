@@ -131,6 +131,26 @@ class ModuleController extends Controller
     }
 
     /**
+     * @Rest\Patch(
+     *    path = "/marks/valid/{id}",
+     *    name = "app_training_validmark"
+     *    requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(StatusCode = 201)
+     * @ParamConverter("studModule", class="AppBundle\Entity\StudentModule", converter="fos_rest.request_body")
+     */
+    public function validMarkAction($id, StudentModule $studModule) {
+        $em = $this->getDoctrine()->getManager();
+
+        $studentModule = $em->getRepository('AppBundle:StudentModule')->find($id);
+        $studentModule->setIsValid(1);
+
+        $em->flush();
+
+        return $myarr;
+    }
+
+    /**
      * @Rest\Post(
      *    path = "/addteacher",
      *    name = "app_training_addteacher"
