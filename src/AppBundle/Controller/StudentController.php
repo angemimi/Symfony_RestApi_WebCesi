@@ -38,6 +38,29 @@ class StudentController extends Controller
     }
 
     /**
+     * @Rest\Patch(
+     *    path = "/students/{id}",
+     *    name = "app_students_update",
+     *    requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(StatusCode = 200)
+     * @ParamConverter("student", class="AppBundle\Entity\Student", converter="fos_rest.request_body")
+     */
+    public function updateAction($id ,Student $student) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $stud = $em->getRepository('AppBundle:Student')->find($id);
+        $stud->setName($student->nom);
+        $stud->setFirstname($student->firstname);
+        $stud->setLogin($student->login);
+        $stud->setPassword($student->password);
+        $stud->setRole($student->role);
+
+        $em->flush();
+        return $stud;
+    }
+
+    /**
      * @Rest\Get(
      *    path = "/students/{id}",
      *    name = "app_students_get",
