@@ -51,7 +51,6 @@ class StudentController extends Controller
 
         $response = new Response($data);
         $response->headers->set('Content-Type', 'application/json');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
 
         return $response;
     }
@@ -103,7 +102,7 @@ class StudentController extends Controller
     }
 
     /**
-     * @Rest\Options("/eleves", name="app_eleve_options")
+     * @Rest\Options("/students", name="app_eleve_options")
      * 
      * @rest\View(StatusCode = 200)
      */

@@ -100,7 +100,7 @@ class TrainingClassController extends Controller
     }
 
     /**
-     * @Rest\Options("/promotions", name="app_promotion_options")
+     * @Rest\Options("/trainingclass", name="app_promotion_options")
      * 
      * @rest\View(StatusCode = 200)
      */

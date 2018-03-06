@@ -101,7 +101,7 @@ class TeacherController extends Controller
     }
 
     /**
-     * @Rest\Options("/enseignants", name="app_enseignant_options")
+     * @Rest\Options("/teachers", name="app_enseignant_options")
      * 
      * @rest\View(StatusCode = 200)
      */
