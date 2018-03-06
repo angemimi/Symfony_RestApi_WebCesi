@@ -37,6 +37,48 @@ class TeacherController extends Controller
     }
 
     /**
+     * @Rest\Patch(
+     *    path = "/teachers/{id}",
+     *    name = "app_teacher_update",
+     *    requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(StatusCode = 200)
+     * @ParamConverter("teach", class="AppBundle\Entity\Teacher", converter="fos_rest.request_body")
+     */
+    public function updateAction($id, Teacher $teach) {
+        $em = $this->getDoctrine()->getManager();
+
+        $teacher = $em->getRepository('AppBundle:Teacher')->find($id);
+        $teacher->setName($teach->nom);
+        $teacher->setFirstname($teach->firstname);
+        $teacher->setLogin($teach->login);
+        $teacher->setPassword($teach->password);
+        $teacher->setRole($teach->role);
+        $teacher->setModule($teach->module);
+
+        $em->flush();
+
+        return $teacher;
+    }
+
+    /**
+     * @Rest\Delete(
+     *    path = "/teachers/{id}",
+     *    name = "app_teacher_delete",
+     *    requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(StatusCode = 200)
+     */
+    public function deleteAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $teacher = $em->getRepository('AppBundle:Teacher')->find($id);
+
+        $em->remove($teacher);
+        $em->flush();
+    }
+
+    /**
      * @Rest\Get(
      *    path = "/teachers/{id}",
      *    name = "app_teacher_get",
