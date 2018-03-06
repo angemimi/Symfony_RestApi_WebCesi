@@ -64,7 +64,7 @@ class StudentController extends Controller
         $em->persist($student);
 
         $em->flush();
-        return $stud;
+        return $student;
     }
 
     /**
