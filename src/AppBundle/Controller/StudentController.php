@@ -61,6 +61,23 @@ class StudentController extends Controller
     }
 
     /**
+     * @Rest\Delete(
+     *    path = "/students/{id}",
+     *    name = "app_students_delete",
+     *    requirements = {"id"="\d+"}
+     * )
+     * @Rest\View(StatusCode = 200)
+     */
+    public function deleteAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $student = $em->getRepository('AppBundle:Student')->find($id);
+
+        $em->remove($student);
+        $em->flush();
+    }
+
+    /**
      * @Rest\Get(
      *    path = "/students/{id}",
      *    name = "app_students_get",
