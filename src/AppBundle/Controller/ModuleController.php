@@ -36,6 +36,43 @@ class ModuleController extends Controller
     }
 
     /**
+     * @Rest\Patch(
+     *    path = "/module/{id}",
+     *    name = "app_module_update",
+     *    requirements = {"id"="\d+"}
+     * @Rest\View(StatusCode = 201)
+     * @ParamConverter("module", class="AppBundle\Entity\Module", converter="fos_rest.request_body")
+     */
+    public function updateAction($id, Module $module) {
+        $em = $this->getDoctrine()->getManager();
+        $mod = $em->getRepository('AppBundle:Module')->find($id);
+        $mod->setTitle($module->title);
+        $mod->setContent($module->content);
+        $mod->setTraining($module->training);
+        $mod->setTeacher($module->teachers);
+
+        $em->flush();
+
+        return $mod;
+    }
+
+    /**
+     * @Rest\Delete(
+     *    path = "/module/{id}",
+     *    name = "app_module_update",
+     *    requirements = {"id"="\d+"}
+     * @Rest\View(StatusCode = 201)
+     */
+    public function updateAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        
+        $module = $em->getRepository('AppBundle:Module')->find($id);
+
+        $em->remove($module);
+        $em->flush();
+    }
+
+    /**
      * @Rest\Get(
      *    path = "/modules/{id}",
      *    name = "app_module_get",
