@@ -88,12 +88,9 @@ sensio_framework_extra:
     request: { converters: true }
 
 nelmio_cors:
-    defaults:
-        allow_origin: ['*']
-        allow_headers: ['*']
-        allow_methods: ['POST', 'PUT', 'GET', 'DELETE','OPTIONS']
     paths:
         '^/api/':
             allow_origin: ['*']
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE','OPTIONS']
+            max_age: 3600
