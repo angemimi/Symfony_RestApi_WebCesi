@@ -63,7 +63,7 @@ class ModuleController extends Controller
      *    requirements = {"id"="\d+"}
      * @Rest\View(StatusCode = 201)
      */
-    public function updateAction($id) {
+    public function deleteAction($id) {
         $em = $this->getDoctrine()->getManager();
         
         $module = $em->getRepository('AppBundle:Module')->find($id);
