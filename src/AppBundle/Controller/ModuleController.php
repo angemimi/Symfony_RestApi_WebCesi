@@ -59,7 +59,7 @@ class ModuleController extends Controller
     /**
      * @Rest\Delete(
      *    path = "/module/{id}",
-     *    name = "app_module_update",
+     *    name = "app_module_delete",
      *    requirements = {"id"="\d+"}
      * @Rest\View(StatusCode = 201)
      */
