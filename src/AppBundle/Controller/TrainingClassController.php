@@ -114,9 +114,11 @@ class TrainingClassController extends Controller
         $query = $em->createQuery(
             'SELECT s.id AS idStudent, s.name, s.firstname, m.note, m.comment, m.isRemedial
              FROM AppBundle\Entity\TrainingClass tc
+             JOIN tc.training t
              JOIN tc.students s
-             JOIN s.marks m
-             JOIN m.module mo
+             JOIN t.modules tm
+             JOIN tm.module mo
+             LEFT JOIN s.marks m
              WHERE tc.id=?1 AND mo.id=?2');
         $query->setParameter(1, $idTrainingClass);
         $query->setParameter(2, $idModule);
