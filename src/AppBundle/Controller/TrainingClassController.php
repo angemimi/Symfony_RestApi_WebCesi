@@ -99,6 +99,37 @@ class TrainingClassController extends Controller
         return $response;
     }
 
+
+    /**
+     * @Rest\Get("/trainingclassmarks/{idModule}/{idTrainingClass}", 
+     *    name="app_students_training_marks",
+     *    requirements = {"id"="\d+"})
+     * 
+     * @Rest\View(StatusCode = 200)
+     */
+    public function getTrainingClassMarksAction($idModule, $idTrainingClass)
+    {
+        $em = $this->getDoctrine()->getManager();
+        
+        $query = $em->createQuery(
+            'SELECT s.id AS idStudent, s.name, s.firstname, m.note, m.comment, m.isRemedial
+             FROM AppBundle\Entity\TrainingClass tc
+             JOIN tc.students s
+             JOIN s.marks m
+             JOIN m.module mo
+             WHERE tc.id=?1 AND mo.id=?2');
+        $query->setParameter(1, $idTrainingClass);
+        $query->setParameter(2, $idModule);
+        $result = $query->getResult();
+        
+        $data = $this->get('jms_serializer')->serialize($result, 'json');
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
     /**
      * @Rest\Options("/trainingclass", name="app_promotion_options")
      * 
