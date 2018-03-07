@@ -65,7 +65,7 @@ class TrainingClassController extends Controller
      * )
      * @Rest\View(StatusCode = 200)
      */
-    public function deleteAction(Student $student) {
+    public function deleteAction($id) {
         $em = $this->getDoctrine()->getManager();
         
         $class = $em->getRepository('AppBundle:TrainingClass')->find($id);
