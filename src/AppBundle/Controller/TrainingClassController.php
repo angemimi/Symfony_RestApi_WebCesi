@@ -112,7 +112,7 @@ class TrainingClassController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $query = $em->createQuery(
-            'SELECT s.id AS idStudent, s.name, s.firstname, m.note, m.comment, m.isRemedial
+            'SELECT s.id AS idStudent, s.name, s.firstname, m.note, m.comment, m.isRemedial, mo.title, tc.code, t.code, tc.year
              FROM AppBundle\Entity\TrainingClass tc
              JOIN tc.training t
              JOIN tc.students s
