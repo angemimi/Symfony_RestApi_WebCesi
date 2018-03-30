@@ -1,25 +1,11 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
-    encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
-        AppBundle\Entity\Administrator: plaintext
-        AppBundle\Entity\Student: plaintext
-        AppBundle\Entity\Teacher: plaintext
-
-    role_hierarchy:
-        ROLE_ADMIN: ROLE_ADMIN
-        ROLE_TEACHER: ROLE_TEACHER
-        ROLE_STUDENT: ROLE_STUDENT
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        admin_db:
-            entity: {class: AppBundle\Entity\Administrator, property: login}
-        teacher_db:
-            entity: {class: AppBundle\Entity\Teacher, property: login}
-        student_db:
-            entity: {class: AppBundle\Entity\Student, property: login}
+        in_memory:
+            memory: ~
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -28,15 +14,11 @@ security:
             security: false
 
         main:
-            admin:   ^/
-                anonymous: true
-                provider:  admin_db 
-            teacher:
-                anonymous: true
-                provider:  teacher_db 
-            student:
-                anonymous: true
-                provider:  student_db
+            anonymous: ~
+            # activate different ways to authenticate
 
-    access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            #form_login: ~
